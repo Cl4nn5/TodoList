@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows.Forms;
 
 namespace DayTodoList.Controllers
 {
@@ -10,6 +12,11 @@ namespace DayTodoList.Controllers
     {
         public ActionResult Index()
         {
+            var ht = Sample();
+            MessageBox.Show(ht.ToString());
+
+            Console.WriteLine(ht);
+
             return View();
         }
 
@@ -26,5 +33,17 @@ namespace DayTodoList.Controllers
 
             return View();
         }
+
+        public Hashtable Sample()
+        {
+            Hashtable temp = new Hashtable();
+
+            temp.Add("name", "KIM");
+            temp.Add("name2", "LEE");
+            temp.Add("age", 1);
+
+            return temp;
+        }
+
     }
 }
