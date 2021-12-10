@@ -22,19 +22,45 @@
             content: "Loading...";
         }
     </style>
-    <!-- <script src="./Assets/alert.js" type="module"></script> -->
+    
     <script type="module">
         import {user, sayHi} from "./Assets/alert.js"
 
         console.log(user);
     </script>
-    <script type="text/html" id="tpl-title">
+    <script type="text/html" id="tpl-login-form">
+        <form @submit.prevent="handlerSubmit">
+            <h1>{{title}}</h1>
+            <!-- <div>사용자 : {{model.name}}</div>
+            <input type="text" :value="model.name"> -->
+
+                <custom-input
+                    v-for="(input, i) in inputs"
+                    :key="i"
+                    :type="input.type"
+                    :value="input.value"
+                    :label="input.label"
+                />
+
+            <custom-input
+                type="email"
+                v-model="email"
+                :modelValue="email"
+                :label="emailLabel"
+            />
+            <custom-input
+                type="password"
+                v-model="password"
+                :label="passwordLabel"
+            />
+            <button>Log In</button>
+        </form>
 
     </script>
 </head>
 <body>
     
-    <div id="app1">
+    <!-- <div id="app1">
         <h3>hello Vue App1</h3>
         <main>
             <div></div>
@@ -48,12 +74,10 @@
                 </ul>
             </nav>
         </main>
-    </div>
-
-    
+    </div> -->
 
     <div id="app2" v-cloak>
-        <h3>hello Vue App2</h3>
+        <login-form></login-form>
         <main>
             <div>
                 {{greeting}}
@@ -76,7 +100,6 @@
     <!-- <script src="https://unpkg.com/vue-router@3.5.2/dist/vue-router.js"></script> -->
 
     <script>
-        // TODO: Vue.Compoent
         // let App2 = Vue.createApp({
         let App2 = Vue.createApp({
             data() {
@@ -95,8 +118,70 @@
             },
         })
 
-        App2.component('custom-title', {
-            
+        App2.component('login-form', {
+            template:'#tpl-login-form',
+            components:['custom-input'],
+            data(){
+                return {
+                    title: 'Login Form',
+                    inputs:[
+                        {
+                            label:'EmailLabel',
+                            value:'',
+                            type:'email'
+                        },
+                        {
+                            label:'PasswordLabel',
+                            value:'1234',
+                            type:'password'
+                        },
+                    ],
+                    email: 'test_1st',
+                    password: '',
+                    emailLabel: 'Enter Email',
+                    passwordLabel: 'Password',
+                    // model:{
+                    //     name:'Kim',
+                    //     age:30,
+                    // }
+                }
+            },
+            methods: {
+                handlerSubmit(){
+                    console.log(this.inputs[0].value, this.password)
+                }
+            },
+            computed: {
+                // modelName : {
+                //     get(){
+                //         return this.model.name;
+                //     }
+                // }
+            },
+        })
+        App2.component('custom-input',{
+            template : `
+                    <label>
+                        {{label}}
+                        <input :type="type" v-model="value" >
+                    </label>
+            `,
+            props: ['label','modelValue','type','value'],
+            computed: {
+                inputValue:{
+                    get(){
+                        return this.modelValue;
+                    },
+                    set(value){
+                        this.$emit('update:modelValue', value + 'wow')
+                    }
+                }
+            },
+            // data() {
+            //     return {
+            //         inputValue: ''
+            //     }
+            // },
         })
 
         App2.mount('#app2');
