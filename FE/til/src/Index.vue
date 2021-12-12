@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        메인페이지입니다.
         <TilHeader/>
         <Pagepick/>
     </div>

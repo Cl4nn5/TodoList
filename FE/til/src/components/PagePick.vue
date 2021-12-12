@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <div class="card">
+    <div class="card" v-for="(item, i) in cardCollection" :key="i">
       <div class="content">
-        <h2>h2 Text</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        <a href="#">Read More</a>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.text }}</p>
+        <a href="javascript:void(0);">Read More</a>
       </div>
-      <img src="../assets/images/nathan.png" alt="왼쪽이미지" />
+      <img :src="item.img.src" :alt="item.img.alt" />
     </div>
-    <div class="card">
+    <!-- <div class="card">
       <div class="content">
         <h2>h2 Text</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <a href="#">Read More</a>
       </div>
       <img src="../assets/images/sam.png" alt="오른쪽이미지" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -24,12 +24,59 @@ export default {
   name: "Pagepick",
 
   data() {
-    return {};
+    return {
+      cardCollection: [
+        // card1
+        {
+          title: "nathan",
+          text: "nathan에 대한 소개글",
+          img: {
+            src: '',
+            alt: "왼쪽이미지",
+          },
+        },
+        // card2
+        {
+          title: "sam",
+          text: "sam에 대한 어쩌구 저쩌구",
+          img: {
+            src: '',
+            alt: "오른쪽이미지",
+          },
+        },
+      ],
+    };
+  },
+  created() {
+    this.init();
   },
 
   mounted() {},
 
-  methods: {},
+  methods: {
+  init() {
+      this.cardCollection = [
+        // card1
+        {
+          title: "nathan",
+          text: "nathan에 대한 소개글",
+          img: {
+            src: require("../assets/images/nathan.png"),
+            alt: "왼쪽이미지",
+          },
+        },
+        // card2
+        {
+          title: "sam",
+          text: "sam에 대한 어쩌구 저쩌구",
+          img: {
+            src: require("../assets/images/sam.png"),
+            alt: "오른쪽이미지",
+          },
+        },
+      ]
+    },
+  },
 };
 </script>
 
@@ -97,9 +144,9 @@ export default {
 }
 
 @media screen and (max-width: 1016px) {
-  /* .container{
+  .container{
         flex-direction: column;
-    } */
+    }
   .container .card {
     width: auto;
     align-items: flex-start;
